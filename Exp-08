@@ -1,0 +1,72 @@
+EXPERIMENT 8: Using a Pre-trained Model in Keras for Transfer Learning
+Algorithm
+1. Import the required TensorFlow/Keras libraries.
+2. Load the CIFAR-10 image dataset.
+3. Resize and normalize the images.
+4. Load the pre-trained MobileNetV2 model without its top layer.
+5. Freeze the pre-trained model layers.
+6. Add a new classification layer for 10 classes.
+7. Compile and train the model.
+8. Evaluate the model using test data.
+9. Display the test accuracy.
+Code
+
+import tensorflow as tf
+from tensorflow.keras import layers, models
+
+# Load CIFAR-10 dataset
+(x_train, y_train), (x_test, y_test) = \
+    tf.keras.datasets.cifar10.load_data()
+
+# Resize images
+x_train = tf.image.resize(x_train[:5000], (96, 96))
+x_test = tf.image.resize(x_test[:1000], (96, 96))
+
+y_train = y_train[:5000]
+y_test = y_test[:1000]
+
+# Load pre-trained MobileNetV2
+base_model = tf.keras.applications.MobileNetV2(
+    weights='imagenet',
+    include_top=False,
+    input_shape=(96, 96, 3)
+)
+
+# Freeze pre-trained layers
+base_model.trainable = False
+
+# Add classification layers
+model = models.Sequential([
+    base_model,
+    layers.GlobalAveragePooling2D(),
+    layers.Dense(10, activation='softmax')
+])
+
+# Compile model
+model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train model
+model.fit(x_train, y_train, epochs=2, batch_size=32)
+
+# Evaluate model
+loss, accuracy = model.evaluate(x_test, y_test)
+
+print("Test Accuracy:", round(accuracy, 4))
+
+Sample Output
+Epoch 1/2
+157/157 - accuracy: 0.61
+
+Epoch 2/2
+157/157 - accuracy: 0.70
+
+32/32 - accuracy: 0.68
+
+Test Accuracy: 0.68
+
+Result
+The pre-trained MobileNetV2 model was successfully used for Transfer Learning and image classification using TensorFlow/Keras.
