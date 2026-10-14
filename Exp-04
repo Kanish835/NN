@@ -1,0 +1,61 @@
+Experiment: Implementation of a Feed-Forward Neural Network (FFNN) using TensorFlow/Keras
+Algorithm
+(Record-friendly format)
+1. Import the required libraries (tensorflow and numpy).
+2. Prepare the input dataset and corresponding target labels.
+3. Create a Sequential Feed-Forward Neural Network model.
+4. Add an input layer and one hidden layer with ReLU activation.
+5. Add an output layer with Sigmoid activation for binary classification.
+6. Compile the model using the Adam optimizer and binary cross-entropy loss function.
+7. Train the model using the training dataset for a fixed number of epochs.
+8. Test the trained model by predicting the output for the given inputs.
+9. Display the predicted results.
+Program
+
+import tensorflow as tf
+import numpy as np
+
+# Input data (XOR gate)
+X = np.array([[0,0],
+              [0,1],
+              [1,0],
+              [1,1]], dtype=np.float32)
+
+# Output labels
+y = np.array([[0],
+              [1],
+              [1],
+              [0]], dtype=np.float32)
+
+# Create Feed-Forward Neural Network
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(4, activation='relu', input_shape=(2,)),
+    tf.keras.layers.Dense(1, activation='sigmoid')
+])
+
+# Compile the model
+model.compile(optimizer='adam',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+
+# Train the model
+model.fit(X, y, epochs=500, verbose=0)
+
+# Predict outputs
+predictions = model.predict(X)
+
+print("Predicted Outputs:")
+for i in range(len(X)):
+    print(X[i], "->", round(predictions[i][0]))
+
+Sample Output
+1/1 ━━━━━━━━━━━━━━━━━━━━ 0s 24ms/step
+
+Predicted Outputs:
+[0. 0.] -> 0
+[0. 1.] -> 1
+[1. 0.] -> 1
+[1. 1.] -> 0
+
+Result
+The Feed-Forward Neural Network (FFNN) was successfully implemented using TensorFlow/Keras. The network learned the XOR gate and correctly predicted the output for all input combinations.
