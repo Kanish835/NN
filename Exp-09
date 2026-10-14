@@ -1,0 +1,63 @@
+EXPERIMENT 9: Sentiment Analysis using RNN
+Algorithm
+1. Import the required TensorFlow/Keras libraries.
+2. Load the IMDB movie review dataset.
+3. Convert the text reviews into sequences of integers.
+4. Pad the sequences to equal length.
+5. Create an RNN model using an Embedding and SimpleRNN layer.
+6. Add a Dense layer with sigmoid activation.
+7. Compile the model using Adam optimizer and binary cross-entropy loss.
+8. Train the model using the training data.
+9. Evaluate the model using the test data.
+10. Display the test accuracy.
+Code
+import tensorflow as tf
+from tensorflow.keras import layers
+
+# Load IMDB dataset
+(x_train, y_train), (x_test, y_test) = \
+    tf.keras.datasets.imdb.load_data(num_words=10000)
+
+# Pad sequences
+x_train = tf.keras.preprocessing.sequence.pad_sequences(
+    x_train, maxlen=100
+)
+x_test = tf.keras.preprocessing.sequence.pad_sequences(
+    x_test, maxlen=100
+)
+
+# Create RNN model
+model = tf.keras.Sequential([
+    layers.Embedding(10000, 32),
+    layers.SimpleRNN(32),
+    layers.Dense(1, activation='sigmoid')
+])
+
+# Compile model
+model.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train model
+model.fit(x_train, y_train, epochs=2, batch_size=64)
+
+# Evaluate model
+loss, accuracy = model.evaluate(x_test, y_test)
+
+print("Test Accuracy:", round(accuracy, 4))
+
+Sample Output
+Epoch 1/2
+391/391 - accuracy: 0.72
+
+Epoch 2/2
+391/391 - accuracy: 0.83
+
+782/782 - accuracy: 0.81
+
+Test Accuracy: 0.81
+
+Result
+The RNN-based sentiment analysis model was successfully implemented using TensorFlow/Keras and classified movie reviews as positive or negative.
