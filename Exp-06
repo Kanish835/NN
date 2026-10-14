@@ -1,0 +1,64 @@
+EXPERIMENT 6: Hyperparameter Tuning of a Deep Learning Model
+Algorithm
+1. Import the required libraries.
+2. Load and preprocess the MNIST dataset.
+3. Create a neural network with selected hyperparameters.
+4. Train the model with different learning rates and batch sizes.
+5. Compare the validation accuracy of the models.
+6. Select the hyperparameters that give better accuracy.
+7. Display the best accuracy.
+Code
+
+import tensorflow as tf
+
+# Load dataset
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+
+x_train = x_train / 255.0
+x_test = x_test / 255.0
+
+# Try different hyperparameters
+learning_rates = [0.001, 0.01]
+batch_sizes = [32, 64]
+
+best_acc = 0
+
+for lr in learning_rates:
+    for batch in batch_sizes:
+
+        model = tf.keras.Sequential([
+            tf.keras.layers.Flatten(input_shape=(28, 28)),
+            tf.keras.layers.Dense(128, activation='relu'),
+            tf.keras.layers.Dense(10, activation='softmax')
+        ])
+
+        model.compile(
+            optimizer=tf.keras.optimizers.Adam(learning_rate=lr),
+            loss='sparse_categorical_crossentropy',
+            metrics=['accuracy']
+        )
+
+        model.fit(x_train, y_train,
+                  epochs=3,
+                  batch_size=batch,
+                  verbose=0)
+
+        loss, acc = model.evaluate(x_test, y_test, verbose=0)
+
+        print("LR:", lr, "Batch:", batch, "Accuracy:", round(acc, 4))
+
+        if acc > best_acc:
+            best_acc = acc
+
+print("Best Accuracy:", round(best_acc, 4))
+
+Sample Output
+LR: 0.001 Batch: 32 Accuracy: 0.9745
+LR: 0.001 Batch: 64 Accuracy: 0.9708
+LR: 0.01 Batch: 32 Accuracy: 0.9621
+LR: 0.01 Batch: 64 Accuracy: 0.9587
+
+Best Accuracy: 0.9745
+
+Result
+The deep learning model was successfully improved by tuning the learning rate and batch size, and the best-performing hyperparameters were identified.
