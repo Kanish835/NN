@@ -1,0 +1,42 @@
+EXPERIMENT: Implement a Regression Model in Keras
+Algorithm
+1. Import the required TensorFlow/Keras libraries.
+2. Create the input data and target values.
+3. Build a Sequential model with a Dense output layer.
+4. Compile the model using the Adam optimizer and Mean Squared Error loss.
+5. Train the model using the input data.
+6. Predict the output for a new input.
+7. Display the predicted value.
+
+Code
+import tensorflow as tf
+import numpy as np
+
+# Input and output data
+X = np.array([1, 2, 3, 4, 5], dtype=float)
+y = np.array([2, 4, 6, 8, 10], dtype=float)
+
+# Create regression model
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(1, input_shape=(1,))
+])
+
+# Compile model
+model.compile(optimizer='sgd', loss='mse')
+
+# Train model
+model.fit(X, y, epochs=500, verbose=0)
+
+# Predict output
+result = model.predict(np.array([6.0]))
+
+print("Predicted value:", round(result[0][0], 2))
+
+Sample Output
+1/1 ━━━━━━━━━━━━━━━━━━━━ 0s
+
+Predicted value: 12.00
+
+
+Result
+The regression model was successfully implemented using Keras. The model learned the relationship between the input and output values and predicted the output for a new input.
