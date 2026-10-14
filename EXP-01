@@ -1,0 +1,33 @@
+EXPERIMENT: Implement Simple Vector Addition in TensorFlow
+Algorithm
+1. Import the TensorFlow library.
+2. Create two vectors using TensorFlow constants.
+3. Add the two vectors using the tf.add() function.
+4. Display the resultant vector.
+5. Stop the program.
+
+
+ Code:
+ import tensorflow as tf
+
+# Create two vectors
+a = tf.constant([1, 2, 3])
+b = tf.constant([4, 5, 6])
+
+# Add vectors
+c = tf.add(a, b)
+
+# Display result
+print("Vector A:", a.numpy())
+print("Vector B:", b.numpy())
+print("Vector Addition:", c.numpy())
+
+
+Sample Output
+Vector A: [1 2 3]
+Vector B: [4 5 6]
+Vector Addition: [5 7 9]
+
+
+Result
+Simple vector addition was successfully implemented using TensorFlow. The corresponding elements of the two vectors were added to obtain the resultant vector.
