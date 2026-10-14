@@ -1,0 +1,51 @@
+EXPERIMENT: Implement a Perceptron in TensorFlow/Keras
+Algorithm
+1. Import the required TensorFlow and NumPy libraries.
+2. Create the input data and target outputs for the AND gate.
+3. Build a Sequential model with a single output neuron.
+4. Compile the model using SGD optimizer and binary cross-entropy loss.
+5. Train the model using the input data.
+6. Predict the outputs for the given inputs.
+7. Display the predicted results.
+Code
+
+import tensorflow as tf
+import numpy as np
+
+# Input data (AND gate)
+X = np.array([[0, 0], [0, 1],
+              [1, 0], [1, 1]], dtype=float)
+
+y = np.array([0, 0, 0, 1], dtype=float)
+
+# Create perceptron model
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(1, activation='sigmoid',
+                          input_shape=(2,))
+])
+
+# Compile model
+model.compile(optimizer='sgd',
+              loss='binary_crossentropy',
+              metrics=['accuracy'])
+
+# Train model
+model.fit(X, y, epochs=1000, verbose=0)
+
+# Predict outputs
+pred = model.predict(X, verbose=0)
+
+print("Predicted Outputs:")
+for i in range(len(X)):
+    print(X[i], "->", int(pred[i][0] >= 0.5))
+
+Sample Output
+Predicted Outputs:
+[0. 0.] -> 0
+[0. 1.] -> 0
+[1. 0.] -> 0
+[1. 1.] -> 1
+
+
+Result
+The perceptron was successfully implemented using TensorFlow/Keras and correctly classified the AND gate inputs.
